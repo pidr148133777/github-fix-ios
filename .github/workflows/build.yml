@@ -1,0 +1,29 @@
+name: Build Rootless Tweak
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git ~/theos
+          curl -fsSL https://raw.githubusercontent.com/theos/sdks/master/iPhoneOS16.5.sdk.tar.xz | tar -xJ -C ~/theos/sdks
+
+      - name: Build Tweak
+        run: |
+          export THEOS=~/theos
+          make package THEOS_PACKAGE_SCHEME=rootless FINALPACKAGE=1
+
+      - name: Upload .deb Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GitHubFix-rootless-deb
+          path: packages/*.deb

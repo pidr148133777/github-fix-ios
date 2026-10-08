@@ -1,0 +1,9 @@
+Package: com.local.githubfix
+Name: GitHub Safari Fix
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Fixes GitHub mobile layout and horizontal viewport overflow in Safari on iOS 16
+Maintainer: Developer
+Author: Developer
+Section: Tweaks
+Depends: mobilesubstrate
